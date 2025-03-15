@@ -2277,6 +2277,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
+          "AutoMapper": "6.2.2",
           "ModelLayer": "1.0.0",
           "RepositoryLayer": "1.0.0"
         },

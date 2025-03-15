@@ -4,7 +4,7 @@ using ModelLayer.Model;
 namespace ModelLayer.Validator
 {
     /// <summary>
-    /// Validator for AddressBookEntryDTO using FluentValidation.
+    /// Validator for AddressBookEntryDTO using FluentValidation
     /// </summary>
     public class AddressBookEntryValidator : AbstractValidator<AddressBookEntry>
     {

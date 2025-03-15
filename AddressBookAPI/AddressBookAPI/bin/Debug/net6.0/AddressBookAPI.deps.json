@@ -1325,6 +1325,7 @@
       },
       "BusinessLayer/1.0.0": {
         "dependencies": {
+          "AutoMapper": "6.2.2",
           "ModelLayer": "1.0.0",
           "RepositoryLayer": "1.0.0"
         },

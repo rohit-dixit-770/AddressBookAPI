@@ -2,7 +2,7 @@
 using ModelLayer.Model;
 using RepositoryLayer.Entity;
 
-namespace AddressBookAPI.AutoMapper
+namespace BusinessLayer.AutoMapper
 {
     public class AddressBookMapper : Profile
     {
