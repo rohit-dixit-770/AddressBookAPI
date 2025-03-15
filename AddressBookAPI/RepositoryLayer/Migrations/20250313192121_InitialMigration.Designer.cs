@@ -11,7 +11,7 @@ using RepositoryLayer.Context;
 namespace RepositoryLayer.Migrations
 {
     [DbContext(typeof(AddressBookDBContext))]
-    [Migration("20250312201529_InitialMigration")]
+    [Migration("20250313192121_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -30,6 +30,10 @@ namespace RepositoryLayer.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()

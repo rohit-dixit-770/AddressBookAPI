@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "5PhyTv713Ww=",
+  "dgSpecHash": "CfvyM+da7oo=",
   "success": true,
   "projectFilePath": "C:\\Users\\HP\\Documents\\AddressBookAPI\\AddressBookAPI\\ModelLayer\\ModelLayer.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\HP\\.nuget\\packages\\fluentvalidation\\11.11.0\\fluentvalidation.11.11.0.nupkg.sha512"
+  ],
   "logs": []
 }

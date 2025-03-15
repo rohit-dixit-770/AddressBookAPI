@@ -9,7 +9,7 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[RepositoryLayer.Entity.AddressBookEntity, RepositoryLayer, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "ModelLayer.Model.ResponseModel\u00601[[System.Collections.Generic.IEnumerable\u00601[[ModelLayer.Model.AddressBookEntry, ModelLayer, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -29,13 +29,13 @@
     "Parameters": [
       {
         "Name": "contact",
-        "Type": "RepositoryLayer.Entity.AddressBookEntity",
+        "Type": "ModelLayer.Model.AddressBookEntry",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "RepositoryLayer.Entity.AddressBookEntity",
+        "Type": "ModelLayer.Model.ResponseModel\u00601[[ModelLayer.Model.AddressBookEntry, ModelLayer, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -61,7 +61,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "RepositoryLayer.Entity.AddressBookEntity",
+        "Type": "ModelLayer.Model.ResponseModel\u00601[[ModelLayer.Model.AddressBookEntry, ModelLayer, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -86,11 +86,21 @@
       },
       {
         "Name": "contact",
-        "Type": "RepositoryLayer.Entity.AddressBookEntity",
+        "Type": "ModelLayer.Model.AddressBookEntry",
         "IsRequired": true
       }
     ],
-    "ReturnTypes": []
+    "ReturnTypes": [
+      {
+        "Type": "ModelLayer.Model.ResponseModel\u00601[[ModelLayer.Model.AddressBookEntry, ModelLayer, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   },
   {
     "ContainingType": "AddressBookAPI.Controllers.AddressBookController",
@@ -106,6 +116,16 @@
         "IsRequired": true
       }
     ],
-    "ReturnTypes": []
+    "ReturnTypes": [
+      {
+        "Type": "ModelLayer.Model.ResponseModel\u00601[[System.String, System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   }
 ]
