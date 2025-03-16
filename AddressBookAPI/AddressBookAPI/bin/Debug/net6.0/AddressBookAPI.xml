@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>AddressBookAPI</name>
+    </assembly>
+    <members>
+        <member name="T:AddressBookAPI.Controllers.AddressBookController">
+            <summary>
+            Controller for managing Address Book contacts.
+            </summary>
+        </member>
+        <member name="M:AddressBookAPI.Controllers.AddressBookController.GetContacts">
+            <summary>
+            Retrieves all contacts from the address book
+            </summary>
+            <returns>List of contacts</returns>
+        </member>
+        <member name="M:AddressBookAPI.Controllers.AddressBookController.GetContact(System.Int32)">
+            <summary>
+            Retrieves a contact by ID
+            </summary>
+            <param name="id">Contact ID</param>
+            <returns>Contact details</returns>
+        </member>
+        <member name="M:AddressBookAPI.Controllers.AddressBookController.CreateContact(ModelLayer.Model.AddressBookEntry)">
+            <summary>
+            Creates a new contact in the address book
+            </summary>
+            <param name="contact">Contact details</param>
+            <returns>Created contact</returns>
+        </member>
+        <member name="M:AddressBookAPI.Controllers.AddressBookController.UpdateContact(System.Int32,ModelLayer.Model.AddressBookEntry)">
+            <summary>
+            Updates an existing contact by ID
+            </summary>
+            <param name="id">Contact ID</param>
+            <param name="contact">Updated contact details</param>
+            <returns>Updated contact</returns>
+        </member>
+        <member name="M:AddressBookAPI.Controllers.AddressBookController.DeleteContact(System.Int32)">
+            <summary>
+            Deletes a contact by ID
+            </summary>
+            <param name="id">Contact ID</param>
+            <returns>Success message</returns>
+        </member>
+        <member name="T:AddressBookAPI.Controllers.UserAuthenticationController">
+            <summary>
+            Controller for handling user authentication and password management
+            </summary>
+        </member>
+        <member name="M:AddressBookAPI.Controllers.UserAuthenticationController.Register(ModelLayer.Model.RegisterModel)">
+            <summary>
+            Registers a new user.
+            </summary>
+            <param name="RegisterModel"></param>
+            <returns>A response indicating success or failure</returns>
+        </member>
+        <member name="M:AddressBookAPI.Controllers.UserAuthenticationController.Login(ModelLayer.Model.LoginModel)">
+            <summary>
+            Logs in a user and generates a JWT token
+            </summary>
+            <param name="LoginModel"></param>
+            <returns>A JWT token if authentication is successful</returns>
+        </member>
+        <member name="M:AddressBookAPI.Controllers.UserAuthenticationController.ForgotPassword(ModelLayer.Model.ForgotPasswordModel)">
+            <summary>
+            Initiates the forgot password process by sending a reset email
+            </summary>
+            <param name="ForgotPasswordModel"></param>
+            <returns>A response indicating success or failure</returns>
+        </member>
+        <member name="M:AddressBookAPI.Controllers.UserAuthenticationController.ResetPassword(ModelLayer.Model.ResetPasswordModel)">
+            <summary>
+            Resets the user's password using a valid reset token
+            </summary>
+            <param name="resetPasswordModel"></param>
+            <returns>A response indicating success or failure.</returns>
+        </member>
+    </members>
+</doc>

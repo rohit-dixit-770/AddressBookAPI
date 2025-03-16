@@ -97,3 +97,10 @@ C:\Users\HP\Documents\AddressBookAPI\AddressBookAPI\AddressBookAPI\bin\Debug\net
 C:\Users\HP\Documents\AddressBookAPI\AddressBookAPI\AddressBookAPI\bin\Debug\net6.0\RabbitMQ.Client.dll
 C:\Users\HP\Documents\AddressBookAPI\AddressBookAPI\AddressBookAPI\bin\Debug\net6.0\RabbitMQ.Client.Core.DependencyInjection.dll
 C:\Users\HP\Documents\AddressBookAPI\AddressBookAPI\AddressBookAPI\bin\Debug\net6.0\System.Threading.Channels.dll
+C:\Users\HP\Documents\AddressBookAPI\AddressBookAPI\AddressBookAPI\bin\Debug\net6.0\AddressBookAPI.xml
+C:\Users\HP\Documents\AddressBookAPI\AddressBookAPI\AddressBookAPI\bin\Debug\net6.0\Microsoft.OpenApi.dll
+C:\Users\HP\Documents\AddressBookAPI\AddressBookAPI\AddressBookAPI\bin\Debug\net6.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\HP\Documents\AddressBookAPI\AddressBookAPI\AddressBookAPI\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\HP\Documents\AddressBookAPI\AddressBookAPI\AddressBookAPI\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\HP\Documents\AddressBookAPI\AddressBookAPI\AddressBookAPI\obj\Debug\net6.0\AddressBookAPI.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\HP\Documents\AddressBookAPI\AddressBookAPI\AddressBookAPI\obj\Debug\net6.0\AddressBookAPI.xml

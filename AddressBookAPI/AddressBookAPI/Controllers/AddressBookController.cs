@@ -12,8 +12,8 @@ namespace AddressBookAPI.Controllers
     /// Controller for managing Address Book contacts.
     /// </summary>
     [ApiController]
-    [Route("[controller]")]
-    public class AddressBookController : ControllerBase
+    [Route("/AddressBook")]
+    public class AddressBookController : Controller
     {
         private readonly IAddressBookServiceBL _addressBookServiceBL;
         private readonly AddressBookEntryValidator _validator;

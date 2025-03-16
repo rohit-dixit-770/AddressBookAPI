@@ -11,6 +11,8 @@ using Middleware.JWT;
 using StackExchange.Redis;
 using Microsoft.Extensions.Caching.Distributed;
 using Middleware.RabbitMQ;
+using Microsoft.OpenApi.Models;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,7 +32,7 @@ builder.Services.AddScoped<IAddressBookServiceRL, AddressBookServiceRL>();
 builder.Services.AddScoped<IUserBL, UserBL>();
 builder.Services.AddScoped<IUserRL, UserRL>();
 
-// Register JWT Helper & Email Service
+// Register JWT Helper, RabbitMQ & Email Service
 builder.Services.AddScoped<JwtTokenHelper>();
 builder.Services.AddScoped<EmailService>();
 builder.Services.AddTransient<RabbitMQProducer>(); 
@@ -64,6 +66,56 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 
+// Add Controllers & Swagger
+
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+
+// Swagger Configuration
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "Address Book API",
+        Version = "v1",
+        Description = "API for managing address book",
+        Contact = new OpenApiContact
+        {
+            Name = "Rohit Dixit",
+            Email = "rohitdixit570@gmail.com"
+        }
+    });
+
+    // Enable JWT Authentication in Swagger UI
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Description = "Enter 'Bearer {token}'",
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer"
+    });
+
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            Array.Empty<string>()
+        }
+    });
+    // Add XML Comments for API Documentation
+    var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+});
+
+
 // Register AutoMapper
 
 builder.Services.AddAutoMapper(typeof(AddressBookMapper));
@@ -73,6 +125,12 @@ builder.Services.AddAutoMapper(typeof(AddressBookMapper));
 builder.Services.AddControllers();
 
 var app = builder.Build();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
 app.UseHttpsRedirection();
 
