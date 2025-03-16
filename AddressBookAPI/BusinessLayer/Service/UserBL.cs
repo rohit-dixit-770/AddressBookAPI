@@ -6,7 +6,9 @@ using BusinessLayer.Interface;
 using Middleware.Email;
 using Middleware.Hashing;
 using Middleware.JWT;
+using Middleware.RabbitMQ;
 using ModelLayer.Model;
+using Newtonsoft.Json;
 using RepositoryLayer.Entity;
 using RepositoryLayer.Interface;
 
@@ -17,41 +19,14 @@ namespace BusinessLayer.Service
         private readonly IUserRL _userRL;
         private readonly JwtTokenHelper _jwtToken;
         private readonly IMapper _mapper;
-        private readonly EmailService _emailService;
-        private readonly IRedisCacheService _redisCacheService;
+        private readonly RabbitMQProducer _rabbitMQProducer;
 
-        public UserBL(IUserRL userRL, JwtTokenHelper jwtToken, IMapper mapper, EmailService emailService, IRedisCacheService redisCacheService)
+        public UserBL(IUserRL userRL, JwtTokenHelper jwtToken, IMapper mapper, RabbitMQProducer rabbitMQProducer)
         {
             _userRL = userRL;
             _jwtToken = jwtToken;
             _mapper = mapper;
-            _emailService = emailService;
-            _redisCacheService = redisCacheService;
-        }
-
-        public string? LoginUser(LoginModel request)
-        {
-            var cachedUser = _redisCacheService.GetCache(request.Email);
-            UserEntity user;
-
-            if (!string.IsNullOrEmpty(cachedUser))
-            {
-                user = System.Text.Json.JsonSerializer.Deserialize<UserEntity>(cachedUser);
-            }
-            else
-            {
-                user = _userRL.GetUser(request.Email);
-                if (user != null)
-                {
-                    _redisCacheService.SetCache(request.Email, System.Text.Json.JsonSerializer.Serialize(user), 30);
-                }
-            }
-
-            if (user == null || !PasswordHelper.VerifyPassword(request.Password, user.Password))
-                return null;
-
-            var userModel = _mapper.Map<UserModel>(user);
-            return _jwtToken.GenerateToken(userModel);
+            _rabbitMQProducer = rabbitMQProducer;
         }
 
         public bool RegisterUser(RegisterModel request)
@@ -64,10 +39,28 @@ namespace BusinessLayer.Service
             user.Password = PasswordHelper.HashPassword(request.Password);
             _userRL.AddUser(user);
 
-            // Store in Redis Cache
-            _redisCacheService.SetCache(user.Email, System.Text.Json.JsonSerializer.Serialize(user), 30);
+            // **Publish Event for Email Notification**
+            var emailMessage = new EmailMessage
+            {
+                To = user.Email,
+                Subject = "Welcome to HelloApp!",
+                Body = "Thank you for registering. Your account has been created successfully."
+            };
+
+            string jsonMessage = JsonConvert.SerializeObject(emailMessage);
+            _rabbitMQProducer.PublishMessage("emailQueue", jsonMessage); 
 
             return true;
+        }
+
+        public string? LoginUser(LoginModel request)
+        {
+            var user = _userRL.GetUser(request.Email);
+            if (user == null || !PasswordHelper.VerifyPassword(request.Password, user.Password))
+                return null;
+
+            var userModel = _mapper.Map<UserModel>(user);
+            return _jwtToken.GenerateToken(userModel);
         }
 
         public bool ForgotPassword(string email)
@@ -76,13 +69,18 @@ namespace BusinessLayer.Service
             if (user == null) return false;
 
             string resetToken = _jwtToken.GenerateResetToken(user.Email);
-
             string encodedToken = HttpUtility.UrlEncode(resetToken);
 
-            string subject = "Reset Your Password";
-            string body = $"Your reset password Token : {encodedToken}";
+            var emailMessage = new EmailMessage
+            {
+                To = user.Email,
+                Subject = "Reset Your Password",
+                Body = $"Your reset password Token: {encodedToken}"
+            };
 
-            _emailService.SendEmail(user.Email, subject, body);
+            string jsonMessage = JsonConvert.SerializeObject(emailMessage);
+            _rabbitMQProducer.PublishMessage("emailQueue", jsonMessage);
+
             return true;
         }
 
@@ -98,15 +96,12 @@ namespace BusinessLayer.Service
                 return false;
 
             string email = tokenData[ClaimTypes.Email].ToString();
-
             var user = _userRL.GetUser(email);
             if (user == null)
                 return false;
 
             user.Password = PasswordHelper.HashPassword(newPassword);
             _userRL.UpdateUser(user);
-
-            _redisCacheService.RemoveCache(email);
 
             return true;
         }

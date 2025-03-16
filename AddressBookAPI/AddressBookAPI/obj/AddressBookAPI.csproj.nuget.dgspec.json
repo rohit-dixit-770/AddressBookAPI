@@ -235,6 +235,18 @@
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",
               "version": "[6.0.36, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
+            },
+            "RabbitMQ.Client": {
+              "target": "Package",
+              "version": "[6.8.1, )"
+            },
+            "RabbitMQ.Client.Core.DependencyInjection": {
+              "target": "Package",
+              "version": "[5.0.0, )"
             }
           },
           "imports": [

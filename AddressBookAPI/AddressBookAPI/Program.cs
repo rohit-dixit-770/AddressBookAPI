@@ -10,6 +10,7 @@ using Middleware.Email;
 using Middleware.JWT;
 using StackExchange.Redis;
 using Microsoft.Extensions.Caching.Distributed;
+using Middleware.RabbitMQ;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,6 +33,9 @@ builder.Services.AddScoped<IUserRL, UserRL>();
 // Register JWT Helper & Email Service
 builder.Services.AddScoped<JwtTokenHelper>();
 builder.Services.AddScoped<EmailService>();
+builder.Services.AddTransient<RabbitMQProducer>(); 
+builder.Services.AddHostedService<RabbitMQConsumer>(); 
+
 
 // Add Redis configuration correctly
 

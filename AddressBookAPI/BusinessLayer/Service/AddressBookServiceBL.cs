@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using AutoMapper;
 using BusinessLayer.Interface;
+using Middleware.RabbitMQ;
 using ModelLayer.Model;
+using Newtonsoft.Json;
 using RepositoryLayer.Entity;
 using RepositoryLayer.Interface;
 
@@ -13,12 +15,14 @@ namespace BusinessLayer.Service
         private readonly IAddressBookServiceRL _addressBookServiceRL;
         private readonly IMapper _mapper;
         private readonly IRedisCacheService _redisCacheService;
+        private readonly RabbitMQProducer _rabbitMQProducer;
 
-        public AddressBookServiceBL(IAddressBookServiceRL addressBookServiceRL, IMapper mapper, IRedisCacheService redisCacheService)
+        public AddressBookServiceBL(IAddressBookServiceRL addressBookServiceRL, IMapper mapper, IRedisCacheService redisCacheService, RabbitMQProducer rabbitMQProducer)
         {
             _addressBookServiceRL = addressBookServiceRL;
             _mapper = mapper;
             _redisCacheService = redisCacheService;
+            _rabbitMQProducer = rabbitMQProducer;
         }
 
         public IEnumerable<AddressBookEntry> GetContacts()
@@ -67,6 +71,10 @@ namespace BusinessLayer.Service
             var mappedContact = _mapper.Map<AddressBookEntry>(addedContact);
 
             _redisCacheService.RemoveCache("AllContacts");
+
+            // **Publish Event to RabbitMQ when a new contact is added**
+            string jsonMessage = JsonConvert.SerializeObject(mappedContact);
+            _rabbitMQProducer.PublishMessage("contactQueue", jsonMessage);
 
             return mappedContact;
         }
