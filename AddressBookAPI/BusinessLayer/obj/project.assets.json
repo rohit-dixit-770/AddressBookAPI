@@ -1528,9 +1528,6 @@
           "ref/netstandard1.3/System.ObjectModel.dll": {
             "related": ".xml"
           }
-        },
-        "runtime": {
-          "lib/netstandard1.3/System.ObjectModel.dll": {}
         }
       },
       "System.Reflection/4.3.0": {

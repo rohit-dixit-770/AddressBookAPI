@@ -5,6 +5,7 @@ using System.Linq;
 using FluentValidation;
 using ModelLayer.Validator;
 using BusinessLayer.Interface;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AddressBookAPI.Controllers
 {
