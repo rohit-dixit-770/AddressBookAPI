@@ -1,0 +1,16 @@
+C:\Users\HP\Documents\AddressBookAPI\AddressBookAPI\Middleware\bin\Debug\net6.0\Middleware.deps.json
+C:\Users\HP\Documents\AddressBookAPI\AddressBookAPI\Middleware\bin\Debug\net6.0\Middleware.dll
+C:\Users\HP\Documents\AddressBookAPI\AddressBookAPI\Middleware\bin\Debug\net6.0\Middleware.pdb
+C:\Users\HP\Documents\AddressBookAPI\AddressBookAPI\Middleware\bin\Debug\net6.0\ModelLayer.dll
+C:\Users\HP\Documents\AddressBookAPI\AddressBookAPI\Middleware\bin\Debug\net6.0\ModelLayer.pdb
+C:\Users\HP\Documents\AddressBookAPI\AddressBookAPI\Middleware\obj\Debug\net6.0\Middleware.csproj.AssemblyReference.cache
+C:\Users\HP\Documents\AddressBookAPI\AddressBookAPI\Middleware\obj\Debug\net6.0\Middleware.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\HP\Documents\AddressBookAPI\AddressBookAPI\Middleware\obj\Debug\net6.0\Middleware.AssemblyInfoInputs.cache
+C:\Users\HP\Documents\AddressBookAPI\AddressBookAPI\Middleware\obj\Debug\net6.0\Middleware.AssemblyInfo.cs
+C:\Users\HP\Documents\AddressBookAPI\AddressBookAPI\Middleware\obj\Debug\net6.0\Middleware.csproj.CoreCompileInputs.cache
+C:\Users\HP\Documents\AddressBookAPI\AddressBookAPI\Middleware\obj\Debug\net6.0\Middleware.sourcelink.json
+C:\Users\HP\Documents\AddressBookAPI\AddressBookAPI\Middleware\obj\Debug\net6.0\Middleware.csproj.Up2Date
+C:\Users\HP\Documents\AddressBookAPI\AddressBookAPI\Middleware\obj\Debug\net6.0\Middleware.dll
+C:\Users\HP\Documents\AddressBookAPI\AddressBookAPI\Middleware\obj\Debug\net6.0\refint\Middleware.dll
+C:\Users\HP\Documents\AddressBookAPI\AddressBookAPI\Middleware\obj\Debug\net6.0\Middleware.pdb
+C:\Users\HP\Documents\AddressBookAPI\AddressBookAPI\Middleware\obj\Debug\net6.0\ref\Middleware.dll

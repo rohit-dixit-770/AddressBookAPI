@@ -16,3 +16,5 @@ C:\Users\HP\Documents\AddressBookAPI\AddressBookAPI\RepositoryLayer\obj\Debug\ne
 C:\Users\HP\Documents\AddressBookAPI\AddressBookAPI\RepositoryLayer\obj\Debug\net6.0\ref\RepositoryLayer.dll
 C:\Users\HP\Documents\AddressBookAPI\AddressBookAPI\RepositoryLayer\bin\Debug\net6.0\RepositoryLayer.runtimeconfig.json
 C:\Users\HP\Documents\AddressBookAPI\AddressBookAPI\RepositoryLayer\obj\Debug\net6.0\RepositoryLayer.genruntimeconfig.cache
+C:\Users\HP\Documents\AddressBookAPI\AddressBookAPI\RepositoryLayer\bin\Debug\net6.0\Middleware.dll
+C:\Users\HP\Documents\AddressBookAPI\AddressBookAPI\RepositoryLayer\bin\Debug\net6.0\Middleware.pdb

@@ -21,5 +21,11 @@ namespace RepositoryLayer.Entity
 
         [Required]
         public string Address { get; set; }
+
+        [Required]
+        [ForeignKey("User")] 
+        public int UserId { get; set; }
+
+        public virtual UserEntity User { get; set; }
     }
 }

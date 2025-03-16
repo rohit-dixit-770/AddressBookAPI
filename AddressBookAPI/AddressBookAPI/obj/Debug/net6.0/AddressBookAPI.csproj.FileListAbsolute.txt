@@ -86,3 +86,7 @@ C:\Users\HP\Documents\AddressBookAPI\AddressBookAPI\AddressBookAPI\bin\Debug\net
 C:\Users\HP\Documents\AddressBookAPI\AddressBookAPI\AddressBookAPI\bin\Debug\net6.0\Microsoft.DotNet.PlatformAbstractions.dll
 C:\Users\HP\Documents\AddressBookAPI\AddressBookAPI\AddressBookAPI\bin\Debug\net6.0\Microsoft.Extensions.DependencyModel.dll
 C:\Users\HP\Documents\AddressBookAPI\AddressBookAPI\AddressBookAPI\bin\Debug\net6.0\Newtonsoft.Json.dll
+C:\Users\HP\Documents\AddressBookAPI\AddressBookAPI\AddressBookAPI\bin\Debug\net6.0\BCrypt.Net-Next.dll
+C:\Users\HP\Documents\AddressBookAPI\AddressBookAPI\AddressBookAPI\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\HP\Documents\AddressBookAPI\AddressBookAPI\AddressBookAPI\bin\Debug\net6.0\Middleware.dll
+C:\Users\HP\Documents\AddressBookAPI\AddressBookAPI\AddressBookAPI\bin\Debug\net6.0\Middleware.pdb

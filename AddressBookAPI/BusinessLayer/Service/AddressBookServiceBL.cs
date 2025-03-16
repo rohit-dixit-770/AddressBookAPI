@@ -48,7 +48,7 @@ namespace BusinessLayer.Service
                 return null;
 
             _mapper.Map(contact, existingContact);
-            var updatedContact = _addressBookServiceRL.UpdateContact(existingContact);
+            var updatedContact = _addressBookServiceRL.UpdateContact(id, existingContact);
             return _mapper.Map<AddressBookEntry>(updatedContact);
         }
 

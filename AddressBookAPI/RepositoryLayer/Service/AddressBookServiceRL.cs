@@ -40,11 +40,20 @@ namespace RepositoryLayer.Service
             return contact;
         }
 
-        public AddressBookEntity UpdateContact(AddressBookEntity contact)
+        public AddressBookEntity UpdateContact(int id, AddressBookEntity contact)
         {
-            _context.AddressBooks.Update(contact);
-            _context.SaveChanges();
-            return contact;
+            var existingContact = _context.AddressBooks.FirstOrDefault(c => c.Id == id);
+
+            if (contact != null)
+            {
+                existingContact.Name = contact.Name;
+                existingContact.PhoneNumber = contact.PhoneNumber;
+                existingContact.Address = contact.Address;
+                _context.AddressBooks.Update(contact);
+                _context.SaveChanges();
+                return contact;
+            }
+            return null;
         }
 
         public bool DeleteContact(int id)

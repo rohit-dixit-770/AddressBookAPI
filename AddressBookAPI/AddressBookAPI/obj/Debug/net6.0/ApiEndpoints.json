@@ -127,5 +127,37 @@
         "StatusCode": 200
       }
     ]
+  },
+  {
+    "ContainingType": "AddressBookAPI.Controllers.UserAuthenticationController",
+    "Method": "Login",
+    "RelativePath": "UserAuthentication/login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "ModelLayer.Model.LoginModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AddressBookAPI.Controllers.UserAuthenticationController",
+    "Method": "Register",
+    "RelativePath": "UserAuthentication/register",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "ModelLayer.Model.RegisterModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   }
 ]

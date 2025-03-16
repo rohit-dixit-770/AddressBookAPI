@@ -12,7 +12,7 @@ namespace RepositoryLayer.Interface
         IEnumerable<AddressBookEntity> GetContacts();
         AddressBookEntity GetContact(int id);
         AddressBookEntity CreateContact(AddressBookEntity contact);
-        AddressBookEntity UpdateContact(AddressBookEntity contact);
+        AddressBookEntity UpdateContact(int id, AddressBookEntity contact);
         bool DeleteContact(int id);
     }
 }
