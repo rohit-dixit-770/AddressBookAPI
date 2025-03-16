@@ -90,3 +90,7 @@ C:\Users\HP\Documents\AddressBookAPI\AddressBookAPI\AddressBookAPI\bin\Debug\net
 C:\Users\HP\Documents\AddressBookAPI\AddressBookAPI\AddressBookAPI\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\Users\HP\Documents\AddressBookAPI\AddressBookAPI\AddressBookAPI\bin\Debug\net6.0\Middleware.dll
 C:\Users\HP\Documents\AddressBookAPI\AddressBookAPI\AddressBookAPI\bin\Debug\net6.0\Middleware.pdb
+C:\Users\HP\Documents\AddressBookAPI\AddressBookAPI\AddressBookAPI\bin\Debug\net6.0\Microsoft.Extensions.Caching.StackExchangeRedis.dll
+C:\Users\HP\Documents\AddressBookAPI\AddressBookAPI\AddressBookAPI\bin\Debug\net6.0\Pipelines.Sockets.Unofficial.dll
+C:\Users\HP\Documents\AddressBookAPI\AddressBookAPI\AddressBookAPI\bin\Debug\net6.0\RedisExtension.dll
+C:\Users\HP\Documents\AddressBookAPI\AddressBookAPI\AddressBookAPI\bin\Debug\net6.0\StackExchange.Redis.dll

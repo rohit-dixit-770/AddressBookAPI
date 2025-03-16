@@ -1,19 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Security.Claims;
+using System.Web;
 using AutoMapper;
 using BusinessLayer.Interface;
+using Middleware.Email;
+using Middleware.Hashing;
+using Middleware.JWT;
 using ModelLayer.Model;
 using RepositoryLayer.Entity;
 using RepositoryLayer.Interface;
-using BusinessLayer.AutoMapper;
-using Middleware.JWT;
-using Middleware.Hashing;
-using System.Web;
-using System.Security.Claims;
-using Middleware.Email;
 
 namespace BusinessLayer.Service
 {
@@ -23,20 +18,39 @@ namespace BusinessLayer.Service
         private readonly JwtTokenHelper _jwtToken;
         private readonly IMapper _mapper;
         private readonly EmailService _emailService;
-        public UserBL(IUserRL userRL, JwtTokenHelper jwtToken, IMapper mapper, EmailService emailService)
+        private readonly IRedisCacheService _redisCacheService;
+
+        public UserBL(IUserRL userRL, JwtTokenHelper jwtToken, IMapper mapper, EmailService emailService, IRedisCacheService redisCacheService)
         {
             _userRL = userRL;
             _jwtToken = jwtToken;
             _mapper = mapper;
             _emailService = emailService;
+            _redisCacheService = redisCacheService;
         }
+
         public string? LoginUser(LoginModel request)
         {
-            var user = _userRL.GetUser(request.Email);
+            var cachedUser = _redisCacheService.GetCache(request.Email);
+            UserEntity user;
+
+            if (!string.IsNullOrEmpty(cachedUser))
+            {
+                user = System.Text.Json.JsonSerializer.Deserialize<UserEntity>(cachedUser);
+            }
+            else
+            {
+                user = _userRL.GetUser(request.Email);
+                if (user != null)
+                {
+                    _redisCacheService.SetCache(request.Email, System.Text.Json.JsonSerializer.Serialize(user), 30);
+                }
+            }
+
             if (user == null || !PasswordHelper.VerifyPassword(request.Password, user.Password))
                 return null;
-            var userModel = _mapper.Map<UserModel>(user);
 
+            var userModel = _mapper.Map<UserModel>(user);
             return _jwtToken.GenerateToken(userModel);
         }
 
@@ -45,23 +59,26 @@ namespace BusinessLayer.Service
             var existingUser = _userRL.GetUser(request.Email);
             if (existingUser != null)
                 return false;
+
             var user = _mapper.Map<UserEntity>(request);
             user.Password = PasswordHelper.HashPassword(request.Password);
             _userRL.AddUser(user);
+
+            // Store in Redis Cache
+            _redisCacheService.SetCache(user.Email, System.Text.Json.JsonSerializer.Serialize(user), 30);
+
             return true;
         }
 
         public bool ForgotPassword(string email)
         {
             var user = _userRL.GetUser(email);
-            if (user == null) return false; 
+            if (user == null) return false;
 
             string resetToken = _jwtToken.GenerateResetToken(user.Email);
 
             string encodedToken = HttpUtility.UrlEncode(resetToken);
 
-            // Construct Reset Link
-            
             string subject = "Reset Your Password";
             string body = $"Your reset password Token : {encodedToken}";
 
@@ -72,11 +89,11 @@ namespace BusinessLayer.Service
         public bool ResetPassword(string token, string newPassword)
         {
             if (string.IsNullOrEmpty(token) || string.IsNullOrEmpty(newPassword))
-                return false; 
+                return false;
 
             string decodedToken = HttpUtility.UrlDecode(token);
-
             var tokenData = _jwtToken.ValidateResetToken(decodedToken);
+
             if (tokenData == null || !tokenData.ContainsKey(ClaimTypes.Email))
                 return false;
 
@@ -84,12 +101,14 @@ namespace BusinessLayer.Service
 
             var user = _userRL.GetUser(email);
             if (user == null)
-                return false; 
+                return false;
 
             user.Password = PasswordHelper.HashPassword(newPassword);
             _userRL.UpdateUser(user);
+
+            _redisCacheService.RemoveCache(email);
+
             return true;
         }
-
     }
 }
