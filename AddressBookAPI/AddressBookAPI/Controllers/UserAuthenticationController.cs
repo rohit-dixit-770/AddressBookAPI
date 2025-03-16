@@ -35,5 +35,36 @@ namespace AddressBookAPI.Controllers
             return Ok(new { Token = token });
         }
 
+        [HttpPost("forgot-password")]
+        public IActionResult ForgotPassword([FromBody] ForgotPasswordModel request)
+        {
+            bool isSent = _userBL.ForgotPassword(request.Email);
+            if (!isSent)
+                return BadRequest(new ResponseModel<string> { Success = false, Message = "Email not found" });
+
+            return Ok(new ResponseModel<string> { Success = true, Message = "Reset password email sent successfully." });
+        }
+
+        [HttpPost("reset-password")]
+        public  IActionResult ResetPassword([FromBody] ResetPasswordModel resetPasswordModel)
+        {
+            if (resetPasswordModel.NewPassword != resetPasswordModel.ConfirmPassword) 
+            {
+                return BadRequest(new ResponseModel<string> 
+                { 
+                    Success = false, 
+                    Message = "New Password and Confirm Password are not same" 
+                });
+            }
+                var result = _userBL.ResetPassword(resetPasswordModel.ResetToken, resetPasswordModel.NewPassword);
+                return Ok(new ResponseModel<string>
+                {
+                    Success = result,
+                    Message = result ? "Password reset successfully" : "Invalid token or expired",
+                });
+
+           
+        }
+
     }
 }

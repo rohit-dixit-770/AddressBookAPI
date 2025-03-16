@@ -9,7 +9,7 @@ namespace RepositoryLayer.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Users",
+                name: "Users", 
                 columns: table => new
                 {
                     UserId = table.Column<int>(type: "int", nullable: false)

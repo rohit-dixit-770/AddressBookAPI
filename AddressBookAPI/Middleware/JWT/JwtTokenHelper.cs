@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using ModelLayer.Model;
+using System;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
-using ModelLayer.Model;
-using System.IdentityModel.Tokens.Jwt;
 
 namespace Middleware.JWT
 {
@@ -24,11 +23,27 @@ namespace Middleware.JWT
         {
             var claims = new[]
             {
-            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-            new Claim(ClaimTypes.Email, user.Email),
-            new Claim(ClaimTypes.Name, user.FullName)
-        };
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.Name, user.FullName)
+            };
 
+            return GenerateJwtToken(claims, DateTime.UtcNow.AddMinutes(30)); 
+        }
+
+        public string GenerateResetToken(string email)
+        {
+            var claims = new[]
+            {
+                new Claim(ClaimTypes.Email, email),
+                new Claim("Purpose", "PasswordReset") 
+            };
+
+            return GenerateJwtToken(claims, DateTime.UtcNow.AddMinutes(15)); 
+        }
+
+        private string GenerateJwtToken(IEnumerable<Claim> claims, DateTime expiry)
+        {
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
@@ -36,11 +51,36 @@ namespace Middleware.JWT
                 _configuration["Jwt:Issuer"],
                 _configuration["Jwt:Audience"],
                 claims,
-                expires: DateTime.UtcNow.AddHours(2),
+                expires: expiry,
                 signingCredentials: credentials
             );
 
             return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
+        public Dictionary<string, object>? ValidateResetToken(string token)
+        {
+            var handler = new JwtSecurityTokenHandler();
+            try
+            {
+                var validationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = _configuration["Jwt:Issuer"],
+                    ValidAudience = _configuration["Jwt:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]))
+                };
+
+                var principal = handler.ValidateToken(token, validationParameters, out _);
+                return principal.Claims.ToDictionary(c => c.Type, c => (object)c.Value);
+            }
+            catch
+            {
+                return null;
+            }
         }
     }
 }

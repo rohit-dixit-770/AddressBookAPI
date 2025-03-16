@@ -11,5 +11,6 @@ namespace RepositoryLayer.Interface
     {
         UserEntity GetUser(string email);
         void AddUser(UserEntity user);
+        void UpdateUser(UserEntity user);
     }
 }

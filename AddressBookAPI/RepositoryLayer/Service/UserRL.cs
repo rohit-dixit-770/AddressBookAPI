@@ -31,5 +31,11 @@ namespace RepositoryLayer.Service
             
             return existingUser;
         }
+
+        public void UpdateUser(UserEntity user)
+        {
+            _context.Users.Update(user);
+            _context.SaveChanges();
+        }
     }
 }

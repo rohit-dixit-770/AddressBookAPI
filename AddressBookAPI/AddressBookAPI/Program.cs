@@ -6,6 +6,8 @@ using BusinessLayer.Interface;
 using RepositoryLayer.Interface;
 using RepositoryLayer.Service;
 using BusinessLayer.Service;
+using Middleware.Email;
+using Middleware.JWT;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +23,13 @@ builder.Services.AddDbContext<AddressBookDBContext>(options => options.UseSqlSer
 
 builder.Services.AddScoped<IAddressBookServiceBL, AddressBookServiceBL>();
 builder.Services.AddScoped<IAddressBookServiceRL, AddressBookServiceRL>();
+
+builder.Services.AddScoped<IUserBL, UserBL>();
+builder.Services.AddScoped<IUserRL, UserRL>();
+
+// Register JWT Helper & Email Service
+builder.Services.AddScoped<JwtTokenHelper>();
+builder.Services.AddScoped<EmailService>();
 
 // Register AutoMapper
 
